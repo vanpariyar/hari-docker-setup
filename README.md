@@ -20,6 +20,6 @@ cd hari-docker-setup
 # -f OR --file FILE  use File Options
 # default will use docker-compose.yaml file
 
-sudo docker-compose --file replace_filename_here
+sudo docker-compose up --file replace_filename_here
 
 ```
