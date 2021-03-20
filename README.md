@@ -12,4 +12,14 @@ so insted of doing this i will try to add the simple as submodule
 
 ## Usage
 
-` git submodule add vanpariyar/hari-docker-setup `
+```shell
+git submodule add https://github.com/vanpariyar/hari-docker-setup 
+
+cd hari-docker-setup
+
+# -f OR --file FILE  use File Options
+# default will use docker-compose.yaml file
+
+sudo docker-compose --file replace_filename_here
+
+```
