@@ -26,6 +26,7 @@ services:
 
     labels:
       - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+      - "traefik.docker.network=traefik-reverse-proxy"
 
 networks:
   traefik:
