@@ -1,0 +1,37 @@
+# Use root/example as user/password credentials
+# to inspect IP address of the contianer $ docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
+
+# Note ::::: using traefick version 1.7 
+
+version: '3.1'
+services:
+
+  adminer:
+    image: adminer
+    restart: always
+    labels:
+      - traefik.backend=adminer
+      - traefik.frontend.rule=Host:adminer.docker.localhost
+      - traefik.docker.network=traefik-reverse-proxy
+      - traefik.port=8080
+    networks:
+      - internal-network
+      - traefik
+
+  db:
+    image: mariadb:10.3
+    restart: always
+    networks:
+      - internal-network
+    labels:
+    - traefik.enable=false
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    command: --sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+
+networks:
+  traefik:
+    name: traefik-reverse-proxy
+  internal-network:
+    name: internal-network
+    driver: bridge
