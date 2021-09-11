@@ -28,6 +28,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: example
     command: --sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+    volumes:
+      - mysql_volume:/var/lib/mysql
 
 networks:
   traefik:
@@ -35,3 +37,7 @@ networks:
   internal-network:
     name: internal-network
     driver: bridge
+
+volumes:
+  mysql_volume:
+    eternal: true
