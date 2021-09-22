@@ -40,4 +40,4 @@ networks:
 
 volumes:
   mysql_volume:
-    eternal: true
+    external: true
