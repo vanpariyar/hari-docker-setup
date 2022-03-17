@@ -1,31 +1,42 @@
 version: '3.1'
 
 services:
-
   wordpress:
     image: wordpress
     ports:
       - 9999:80
     environment:
-      WORDPRESS_DB_PASSWORD: example
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
       WORDPRESS_CONFIG_EXTRA:
-        define( 'WP_DEBUG', true );
+        define( 'WP_DEBUG', false );
     volumes:
-      - ./wp-content:/var/www/html/wp-content
+      - ./wp-content:/var/www/html/wp-content/
 
-  mysql:
+  db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db:/var/lib/mysql
+
 
   # phpmyadmin
   phpmyadmin:
     depends_on:
-      - mysql
+      - db
     image: phpmyadmin/phpmyadmin
-    #restart: always
     ports:
       - '9998:80'
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: db
       MYSQL_ROOT_PASSWORD: example
+
+volumes:
+  wordpress:
+  db:
